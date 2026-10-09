@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mateo Pérez · SafeOrder | Control operativo para ecommerce contra entrega</title>
+<meta name="description" content="Confirmo tus pedidos y cuido tu logística para que tengas menos devoluciones y más dinero real. Atención 24/7, incluso domingos y festivos.">
+<meta property="og:title" content="Mateo Pérez · SafeOrder">
+<meta property="og:description" content="Vender no es el problema. El problema es perder dinero por una mala operación.">
+<meta property="og:image" content="img/vsl.png">
+<meta name="theme-color" content="#0A0A0B">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#0A0A0B}
+a{color:#FFB27A}a:hover{color:#FF7A1A}
+.pg{--bg:#0A0A0B;--bg2:#141416;--ink:#FFFFFF;--mut:rgba(255,255,255,.66);--dim:rgba(255,255,255,.46);--line:rgba(255,255,255,.10);--acc:#FF7A1A;--glow:#FFB27A;--ok:#5FD39A;
+container-type:inline-size;container-name:pg;position:relative;background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:clip;min-height:100vh;font-size:17px;line-height:1.6}
+.pg *{box-sizing:border-box}
+:where(.pg) :where(h1,h2,h3,p){margin:0}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-feature-settings:"tnum"}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px;position:relative;z-index:3}
+.sec{position:relative;padding:120px 0}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--glow)}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--acc)}
+.h2{font-size:56px;line-height:1.04;font-weight:800;letter-spacing:-.045em;text-wrap:balance;margin-top:18px}
+.lead{color:var(--mut);font-size:19px;max-width:640px;margin-top:20px}
+.light{font-weight:400;color:var(--mut)}
+.hl{color:var(--glow);font-weight:700}
+/* buttons */
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;border:none;cursor:pointer;text-decoration:none;font:800 15px/1.2 'Manrope',sans-serif;letter-spacing:.02em;padding:16px 28px;min-height:48px;background:var(--ink);color:var(--bg);transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s}
+.btn svg{transition:transform .35s cubic-bezier(.22,1,.36,1)}
+.btn-acc{background:linear-gradient(180deg,#FF8A33,#E8650A);color:#0A0A0B;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 14px 40px -12px var(--acc)}
+.btn-acc:hover{color:#0A0A0B}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.2)}
+.btn-ghost:hover{color:var(--ink)}
+.btn-lg{padding:20px 36px;font-size:16px;min-height:60px}
+.btn-sm{padding:10px 18px;min-height:40px;font-size:13px}
+.shine::after{content:'';position:absolute;top:-30%;bottom:-30%;left:-70%;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-22deg);opacity:0;pointer-events:none}
+@media (hover:hover){.shine:hover::after{animation:sweep .95s cubic-bezier(.22,1,.36,1)}.btn:hover{transform:translateY(-2px)}.btn:hover svg{transform:translateX(3px)}}
+@keyframes sweep{0%{left:-70%;opacity:1}100%{left:135%;opacity:1}}
+/* glass */
+.glass{background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:inset 0 1px 1px rgba(255,255,255,.08),0 30px 80px -40px rgba(0,0,0,.8);position:relative;overflow:hidden;border-radius:24px}
+.glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.2px;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.1) 22%,transparent 42%,transparent 60%,rgba(255,178,122,.12) 80%,rgba(255,178,122,.32));-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.shiny{background-image:linear-gradient(90deg,var(--ink) 15%,var(--glow) 30%,var(--acc) 45%,var(--glow) 58%,var(--ink) 75%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:shiny 6s linear infinite}
+@keyframes shiny{0%{background-position:200% center}100%{background-position:-200% center}}
+/* atmosphere */
+.atmo{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);animation:drift 20s ease-in-out infinite}
+@keyframes drift{50%{transform:translate(-4%,3%) scale(1.08)}}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:64px 64px;-webkit-mask:radial-gradient(ellipse 70% 60% at 50% 30%,#000 20%,transparent 75%);mask:radial-gradient(ellipse 70% 60% at 50% 30%,#000 20%,transparent 75%)}
+.guides{position:absolute;inset:0;max-width:1200px;margin:0 auto;border-left:1px solid var(--line);border-right:1px solid var(--line);pointer-events:none;z-index:1}
+/* topbar + nav */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(10,10,11,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;justify-content:center;gap:18px;padding:10px 20px;font-size:14px;color:var(--mut)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(95,211,154,.6);animation:dot 1.8s infinite;flex:none}
+@keyframes dot{70%{box-shadow:0 0 0 10px rgba(95,211,154,0)}100%{box-shadow:0 0 0 0 rgba(95,211,154,0)}}
+.clock{color:var(--ink);font-weight:700;letter-spacing:.04em}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 0}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.logo-mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(160deg,#FF8A33,#C9530A);display:grid;place-items:center;color:#0A0A0B;box-shadow:0 8px 24px -8px var(--acc)}
+.logo b{font-weight:800;letter-spacing:-.02em;font-size:17px;display:block;line-height:1.1}
+.logo span{font-size:12px;color:var(--dim);display:block;line-height:1.2}
+.nav-links{display:flex;gap:30px}
+.nav-links a{color:var(--mut);text-decoration:none;font-weight:600;font-size:15px}
+.nav-links a:hover{color:var(--ink)}
+/* hero */
+.hero{position:relative;padding:56px 0 110px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 8px 7px 8px;border-radius:999px;border:1px solid rgba(255,178,122,.28);background:rgba(255,122,26,.07);font-size:14px;color:var(--mut)}
+.pill b{background:var(--acc);color:#0A0A0B;font:800 11px/1 'JetBrains Mono',monospace;letter-spacing:.1em;padding:6px 10px;border-radius:999px}
+.pill span{padding-right:8px}
+.h1{font-size:80px;line-height:1;font-weight:800;letter-spacing:-.055em;text-wrap:balance;max-width:1080px;margin:28px auto 0}
+.h1 .light{display:block;font-size:.62em;letter-spacing:-.04em;margin-bottom:12px}
+.sub{color:var(--mut);font-size:20px;max-width:560px;margin:24px auto 0;text-align:center;text-wrap:balance}
+.sub b{color:var(--ink)}
+.vsl{max-width:980px;margin:56px auto 0;border-radius:28px;padding:10px}
+.vsl-frame{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#000}
+.vsl-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.85)}
+.vsl-shade{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(10,10,11,.05),rgba(10,10,11,.65) 80%),linear-gradient(180deg,transparent 55%,rgba(10,10,11,.85))}
+.vsl-tag{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(10,10,11,.6);backdrop-filter:blur(8px);font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+.vsl-tag i{width:8px;height:8px;border-radius:50%;background:#FF4D3D;display:block}
+.vsl-cap{position:absolute;left:24px;right:24px;bottom:26px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;text-align:left}
+.vsl-cap p{font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1.2;max-width:520px}
+.vsl-cap small{font-size:13px;color:var(--mut)}
+.play{position:absolute;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(180deg,#FF8A33,#E8650A);color:#0A0A0B;display:grid;place-items:center;box-shadow:0 0 0 0 rgba(255,122,26,.55);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 30px rgba(255,122,26,0)}100%{box-shadow:0 0 0 0 rgba(255,122,26,0)}}
+.vsl-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.12)}
+.vsl-bar i{display:block;height:100%;width:0;background:var(--acc);box-shadow:0 0 12px var(--acc);animation:prog 14s linear infinite}
+@keyframes prog{to{width:100%}}
+.hero-cta{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:14px}
+.note{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--dim)}
+/* reveal */
+.in{animation:fadeUp 1s cubic-bezier(.22,1,.36,1) both}
+.d1{animation-delay:.15s}.d2{animation-delay:.3s}.d3{animation-delay:.45s}.d4{animation-delay:.6s}.d5{animation-delay:.75s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(6px)}}
+.js .rv,.js .rv-l,.js .rv-s{transition:opacity 1s cubic-bezier(.22,1,.36,1),transform 1.15s cubic-bezier(.22,1,.36,1),filter 1s cubic-bezier(.22,1,.36,1)}
+.js .rv{opacity:0;transform:translateY(64px);filter:blur(8px)}
+.js .rv-l{opacity:0;transform:translateX(-90px)}
+.js .rv-s{opacity:0;transform:translateY(56px) scale(.94);filter:blur(6px)}
+.js .rv.on,.js .rv-l.on,.js .rv-s.on{opacity:1;transform:none;filter:blur(0)}
+.js .stg>*:nth-child(2){transition-delay:.09s}.js .stg>*:nth-child(3){transition-delay:.18s}.js .stg>*:nth-child(4){transition-delay:.27s}.js .stg>*:nth-child(5){transition-delay:.36s}.js .stg>*:nth-child(6){transition-delay:.45s}
+.js .draw{stroke-dasharray:640;stroke-dashoffset:640;transition:stroke-dashoffset 2s cubic-bezier(.22,1,.36,1) .35s}.js .on .draw{stroke-dashoffset:0}
+.js .grow{transform-origin:bottom;transform-box:fill-box;transform:scaleY(0);transition:transform 1.2s cubic-bezier(.22,1,.36,1)}.js .on .grow{transform:scaleY(1)}
+.js .gx{transform-origin:left;transform:scaleX(0);transition:transform 1.4s cubic-bezier(.22,1,.36,1)}.js .on .gx{transform:scaleX(1)}
+.par{transform:translateY(calc(var(--sy,0) * .18px));opacity:calc(1 - var(--sy,0) / 1600)}
+.par2{transform:translateY(calc(var(--p,0) * -60px)) scale(1.08)}
+.wm{transform:translateX(calc(var(--p,0) * 12%))}
+/* funnel */
+.funnel{margin-top:56px;border-radius:28px;padding:44px}
+.f-row{display:grid;grid-template-columns:150px 1fr 330px;gap:28px;align-items:center;padding:18px 0;border-bottom:1px solid var(--line)}
+.f-row:last-of-type{border-bottom:none}
+.f-num{font-size:40px;font-weight:700;letter-spacing:-.03em}
+.f-track{height:18px;border-radius:999px;background:rgba(255,255,255,.05);overflow:hidden}
+.f-fill{height:100%;border-radius:999px}
+.f-lbl{color:var(--mut);font-size:16px}
+.f-lbl b{color:var(--ink);display:block;font-size:17px}
+.f-loss .f-num{color:#FF8A6B}.f-loss .f-fill{background:repeating-linear-gradient(135deg,rgba(255,110,80,.75) 0 8px,rgba(255,110,80,.45) 8px 16px)}
+.f-in .f-fill{background:linear-gradient(90deg,rgba(255,255,255,.35),rgba(255,255,255,.7))}
+.f-win .f-num{color:var(--glow)}.f-win .f-fill{background:linear-gradient(90deg,var(--acc),var(--glow));box-shadow:0 0 18px rgba(255,122,26,.6)}
+.f-foot{margin-top:28px;display:flex;justify-content:space-between;gap:24px;align-items:flex-end}
+.f-foot p{font-size:20px;max-width:720px;color:var(--mut)}
+.f-foot p b{color:var(--ink)}
+.tiny{font-size:12px;color:var(--dim)}
+/* pains */
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.card{padding:34px;transition:transform .45s cubic-bezier(.22,1,.36,1)}
+@media (hover:hover){.card:hover{transform:translateY(-6px)}}
+.ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:rgba(255,122,26,.1);border:1px solid rgba(255,122,26,.25);color:var(--glow)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:26px}
+.idx{font:700 13px/1 'JetBrains Mono',monospace;color:var(--dim)}
+.card h3{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1.2}
+.card p{color:var(--mut);margin-top:10px}
+.quote-band{margin-top:44px;text-align:center;font-size:32px;font-weight:800;letter-spacing:-.035em;line-height:1.2;text-wrap:balance}
+/* offers */
+.offer{padding:44px;border-radius:30px;display:flex;flex-direction:column}
+.offer-hot{background:linear-gradient(180deg,rgba(255,122,26,.12),rgba(255,122,26,.02) 60%);box-shadow:0 40px 120px -50px rgba(255,122,26,.55),inset 0 1px 1px rgba(255,255,255,.1)}
+.chip{display:inline-flex;align-self:flex-start;padding:8px 14px;border-radius:999px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.12em;background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--mut)}
+.offer-hot .chip{background:var(--acc);color:#0A0A0B;border-color:transparent}
+.offer h3{font-size:44px;font-weight:800;letter-spacing:-.045em;margin-top:24px;line-height:1}
+.offer .for{color:var(--mut);margin-top:12px;font-size:18px}
+.list{list-style:none;padding:0;margin:30px 0 36px;display:flex;flex-direction:column;gap:14px;flex:1}
+.list li{display:flex;gap:12px;align-items:flex-start}
+.list svg{flex:none;margin-top:3px;color:var(--acc)}
+.ph{color:var(--glow);font-family:'JetBrains Mono',monospace;font-size:.88em}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;margin-top:60px;position:relative}
+.steps-line{position:absolute;left:0;right:0;top:27px;height:2px;z-index:0}
+.step{position:relative;z-index:1}
+.step-n{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;background:#141416;border:1px solid rgba(255,178,122,.35);font:700 18px/1 'JetBrains Mono',monospace;color:var(--glow);box-shadow:0 0 0 8px var(--bg)}
+.step h3{font-size:20px;font-weight:800;letter-spacing:-.025em;margin-top:22px}
+.step p{color:var(--mut);font-size:15px;margin-top:8px}
+.board{margin-top:64px;padding:28px;border-radius:28px}
+.board-head{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 6px 22px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.board-head b{font-weight:800;font-size:17px}
+.col{background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:12px}
+.col-h{display:flex;align-items:center;gap:10px;font:700 12px/1 'JetBrains Mono',monospace;letter-spacing:.1em}
+.col-h i{width:9px;height:9px;border-radius:50%;display:block}
+.col-d{font-size:13px;color:var(--dim)}
+.ord{background:#141416;border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:13px}
+.ord b{display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--mut);font-weight:500}
+.ord span{display:block;margin-top:6px;color:var(--ink);font-weight:600}
+.ord-live{border-color:rgba(255,122,26,.45);box-shadow:0 0 0 1px rgba(255,122,26,.2),0 10px 30px -14px var(--acc);animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+/* results */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:56px}
+.stat{padding:36px 28px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:none}
+.stat-n{font-size:52px;font-weight:700;letter-spacing:-.04em;line-height:1}
+.stat-l{color:var(--mut);margin-top:12px;font-size:15px}
+.stat svg{display:block;margin-top:18px}
+.slot{border-radius:24px;border:1.5px dashed rgba(255,178,122,.35);background:rgba(255,122,26,.035);display:grid;place-items:center;text-align:center;padding:28px;color:var(--glow);font:600 14px/1.5 'JetBrains Mono',monospace}
+/* mateo */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:72px;align-items:center;margin-top:60px}
+.photo{position:relative;height:560px;border-radius:30px;overflow:hidden;background:#141416}
+.photo .slot{position:absolute;inset:0;border-radius:30px}
+.photo-mask{position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,var(--bg)),linear-gradient(90deg,transparent 70%,rgba(10,10,11,.6));pointer-events:none}
+.name{font-size:84px;font-weight:800;letter-spacing:-.06em;line-height:.95}
+.role{display:inline-flex;margin-top:20px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,178,122,.3);font-weight:700;font-size:14px;color:var(--glow)}
+.about-q{font-size:26px;font-weight:700;letter-spacing:-.025em;line-height:1.3;margin-top:32px;padding-left:22px;border-left:2px solid var(--acc)}
+.about p.story{color:var(--mut);margin-top:22px;font-size:18px}
+.wm-txt{position:absolute;left:0;right:0;top:110px;white-space:nowrap;font-size:230px;font-weight:800;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);pointer-events:none;z-index:0;text-align:center}
+.marq{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.marq-track{display:flex;gap:14px;width:max-content;animation:marq 38s linear infinite}.marq:hover .marq-track{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;white-space:nowrap;font-weight:600;font-size:15px}
+.badge svg{color:var(--acc)}
+/* fit */
+.fit{padding:44px;border-radius:30px}
+.fit h3{font-size:30px;font-weight:800;letter-spacing:-.035em}
+.fit ul{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:16px}
+.fit li{display:flex;gap:14px;font-size:18px;align-items:flex-start}
+.fit li svg{flex:none;margin-top:4px}
+.fit-no li{color:var(--mut)}
+/* learn */
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.reel{border-radius:24px;padding:10px}
+.reel-v{aspect-ratio:9/12;border-radius:16px;background:radial-gradient(ellipse at 50% 30%,rgba(255,122,26,.18),transparent 70%),#141416;display:flex;flex-direction:column;justify-content:space-between;padding:20px;position:relative}
+.reel-v .mini-play{width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;align-self:center;margin-top:60px}
+.reel h3{font-size:20px;font-weight:800;letter-spacing:-.025em;line-height:1.25;padding:18px 10px 10px}
+/* faq */
+.faq-wrap{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:64px;align-items:start}
+.faq{border-bottom:1px solid var(--line)}
+.faq button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;gap:20px;align-items:center;padding:26px 4px;font-weight:800;font-size:20px;letter-spacing:-.02em;min-height:48px}
+.faq button:focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:8px}
+.faq-i{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;flex:none;transition:transform .4s,background .4s;color:var(--glow)}
+.faq.open .faq-i{transform:rotate(45deg);background:rgba(255,122,26,.12)}
+.faq-a{padding:0 4px 26px;color:var(--mut);font-size:17px;max-width:640px}
+/* final */
+.final{padding:84px 64px;border-radius:36px;text-align:center;background:linear-gradient(180deg,rgba(255,122,26,.10),rgba(255,255,255,.015))}
+.final .h2{font-size:68px;max-width:900px;margin:22px auto 0}
+.final .lead{margin:22px auto 0}
+.final .clockbig{font-size:44px;font-weight:700;letter-spacing:.02em;margin-top:30px}
+.final .clockbig small{display:block;font:600 12px/1 'JetBrains Mono',monospace;letter-spacing:.14em;color:var(--dim);margin-top:10px}
+.final-cta{display:flex;justify-content:center;gap:14px;margin-top:36px;flex-wrap:wrap}
+/* footer */
+.foot{border-top:1px solid var(--line);padding:56px 0 64px;margin-top:40px}
+.foot-top{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.foot-links{display:flex;gap:24px;flex-wrap:wrap}
+.foot-links a{color:var(--mut);text-decoration:none;font-size:14px}
+.foot small{display:block;color:var(--dim);font-size:13px;margin-top:28px;max-width:900px;line-height:1.6}
+@media (prefers-reduced-motion:reduce){.js .rv,.js .rv-l,.js .rv-s{transform:none!important;filter:none!important}.blob,.shiny,.marq-track,.play,.dot,.ord-live,.vsl-bar i{animation:none!important}}
+/* responsive */
+@container pg (max-width:1080px){
+.h1{font-size:62px}.h2{font-size:46px}
+.g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.steps{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:40px}.steps-line{display:none}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.stat:nth-child(2){border-right:none}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
+.about{gap:44px}.name{font-size:64px}
+.f-row{grid-template-columns:110px 1fr 260px}
+}
+@container pg (max-width:820px){
+.pg{font-size:16px}
+.wrap{padding:0 20px}
+.sec{padding:64px 0}
+.nav-links,.nav .btn,.topbar .hide-m{display:none}
+.topbar-in{font-size:12.5px;gap:10px}
+.hero{padding:28px 0 64px}
+.h1{font-size:32px;line-height:1.05;letter-spacing:-.045em;margin-top:20px}.h1 .light{font-size:.72em;margin-bottom:8px}
+.sub{font-size:15px;max-width:320px;margin-top:16px}
+.h2{font-size:34px}
+.lead{font-size:17px}
+.pill{font-size:12.5px;flex-wrap:wrap;justify-content:center}
+.vsl{margin-top:34px;padding:6px;border-radius:22px}.vsl-frame{border-radius:16px}
+.play{width:72px;height:72px;margin:-36px 0 0 -36px}
+.vsl-cap{left:14px;right:14px;bottom:16px}.vsl-cap p{font-size:15px}.vsl-cap small{display:none}
+.vsl-tag{top:12px;left:12px;font-size:10px;padding:6px 10px}
+.hero-cta .btn{width:100%}
+.btn-lg{padding:18px 22px;font-size:15px}
+.funnel{padding:24px 20px;margin-top:36px}
+.f-row{grid-template-columns:64px 1fr;gap:6px 16px;padding:16px 0}
+.f-num{font-size:26px;grid-row:span 2}
+.f-track{height:12px}
+.f-lbl{grid-column:2;font-size:14px}.f-lbl b{font-size:15px}
+.f-foot{flex-direction:column;align-items:flex-start}.f-foot p{font-size:17px}
+.g2,.g3,.g4{grid-template-columns:minmax(0,1fr)}
+.card{padding:26px}.card h3{font-size:21px}
+.quote-band{font-size:24px}
+.offer{padding:28px}.offer h3{font-size:36px}.offer .btn{width:100%}
+.steps{grid-template-columns:minmax(0,1fr);gap:26px;margin-top:40px}
+.step{display:grid;grid-template-columns:56px 1fr;column-gap:18px}.step h3{margin-top:4px}.step p{grid-column:2}
+.board{padding:18px;margin-top:44px}.board-head{flex-direction:column;align-items:flex-start}
+.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stat{padding:24px 16px}.stat-n{font-size:34px}
+.about{grid-template-columns:minmax(0,1fr);margin-top:36px}
+.photo{height:420px}
+.name{font-size:48px}
+.about-q{font-size:21px}
+.wm-txt{font-size:120px;top:60px}
+.fit{padding:28px}.fit h3{font-size:24px}.fit li{font-size:16px}
+.reels{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding-bottom:10px;margin:0 -20px;padding-left:20px;padding-right:20px}
+.reels>*{flex:0 0 78%;scroll-snap-align:start}
+.swipe{display:block!important}
+.faq-wrap{grid-template-columns:minmax(0,1fr);gap:24px}
+.faq button{font-size:17px;padding:20px 2px}
+.final{padding:52px 22px;border-radius:26px}.final .h2{font-size:36px}.final .clockbig{font-size:32px}
+.final-cta .btn{width:100%}
+.foot-top{flex-direction:column;align-items:flex-start}
+}
+.swipe{display:none;font-size:13px;color:var(--dim);margin-top:14px}
+</style>
+</head>
+<body>
+<div class="pg">
+
+<!-- 1 · BARRA STICKY -->
+<div class="topbar">
+<div class="topbar-in">
+<i class="dot"></i>
+<span><b style="color: #FFFFFF">SafeOrder en línea</b><span class="hide-m"> · confirmando pedidos ahora mismo, incluso domingos y festivos</span></span>
+<span class="mono clock"><span data-clock>--:--:--</span> COT</span>
+<a class="btn btn-acc btn-sm shine hide-m" href="https://wa.me/57XXXXXXXXXX">Escríbeme</a>
+</div>
+</div>
+
+<!-- 2 · HERO -->
+<header style="position: relative">
+<div class="atmo">
+<div class="blob" style="width: 720px; height: 720px; left: 50%; top: -260px; margin-left: -360px; background: radial-gradient(circle, rgba(255,122,26,.30), transparent 65%)"></div>
+<div class="blob" style="width: 520px; height: 520px; left: -160px; top: 380px; background: radial-gradient(circle, rgba(255,178,122,.14), transparent 65%); animation-duration: 24s"></div>
+<div class="grid-bg"></div>
+</div>
+<div class="guides"></div>
+<div class="wrap">
+<nav class="nav in">
+<a class="logo" href="#top" aria-label="Mateo Pérez · SafeOrder">
+<span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
+<span><b>Mateo Pérez</b><span>SafeOrder · Control operativo</span></span>
+</a>
+<div class="nav-links">
+<a href="#safeorder">SafeOrder</a>
+<a href="#asesoria">Asesoría</a>
+<a href="#como">Cómo funciona</a>
+<a href="#faq">FAQ</a>
+</div>
+<a class="btn btn-ghost btn-sm shine" href="https://wa.me/57XXXXXXXXXX">HABLEMOS</a>
+</nav>
+
+<div class="hero" id="top">
+<div class="pill in d1"><b>CONTROL OPERATIVO</b><span>Para ecommerce y dropshipping contra entrega</span></div>
+<h1 class="h1 in d2"><span class="light">Vender no es el problema.</span>El problema es <span class="shiny">perder dinero</span> por una mala operación.</h1>
+<p class="sub in d3">Confirmo tus pedidos y cuido tu logística para que tengas <b>menos devoluciones y más dinero real.</b></p>
+
+<!-- VSL: INICIO (borrar este bloque para quitarlo) -->
+<div class="vsl glass in d4 par">
+<div class="vsl-frame">
+<img src="img/vsl.png" alt="Mateo Pérez presentando SafeOrder">
+<button class="play" type="button" aria-label="Reproducir vídeo"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></button>
+<div class="vsl-bar"><i></i></div>
+</div>
+</div>
+<!-- VSL: FIN -->
+
+<div class="hero-cta in d5">
+<a class="btn btn-acc btn-lg shine" href="https://wa.me/57XXXXXXXXXX">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/><path d="M9 9.5c.3 1.8 1.7 3.6 3.5 4.5l1.2-1.1 2 .9-.5 1.7c-3.4.2-7-3.3-7-6.6l1.6-.6 1 2-1 .9"/></svg>
+QUIERO PROTEGER MI OPERACIÓN
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a>
+<span class="note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Te respondo por WhatsApp · Atención 24/7, incluso domingos y festivos</span>
+</div>
+</div>
+</div>
+</header>
+
+<!-- 3 · EMBUDO DE PÉRDIDAS -->
+<section class="sec" style="padding-top: 60px">
+<div class="wrap">
+<div class="rv">
+<span class="eyebrow">El embudo de pérdidas</span>
+<h2 class="h2">¿Cuánto de lo que vendes <span class="light">llega de verdad a tu cuenta?</span></h2>
+</div>
+<div class="funnel glass rv-s">
+<div class="f-row f-in"><div class="f-num mono">100</div><div class="f-track"><div class="f-fill gx" style="width: 100%"></div></div><div class="f-lbl"><b>Pedidos que entran</b>por tus anuncios</div></div>
+<div class="f-row f-loss"><div class="f-num mono">[−X]</div><div class="f-track"><div class="f-fill gx" style="width: 14%; transition-delay: .25s"></div></div><div class="f-lbl"><b>Falsos</b>o sin intención de compra</div></div>
+<div class="f-row f-loss"><div class="f-num mono">[−X]</div><div class="f-track"><div class="f-fill gx" style="width: 10%; transition-delay: .45s"></div></div><div class="f-lbl"><b>Rechazados</b>en la puerta</div></div>
+<div class="f-row f-loss"><div class="f-num mono">[−X]</div><div class="f-track"><div class="f-fill gx" style="width: 8%; transition-delay: .65s"></div></div><div class="f-lbl"><b>Devoluciones</b>que pagas dos veces de flete</div></div>
+<div class="f-row f-win"><div class="f-num mono">[X]</div><div class="f-track"><div class="f-fill gx" style="width: 68%; transition-delay: .9s"></div></div><div class="f-lbl"><b>Se convierten en dinero</b>pedidos que de verdad cobras</div></div>
+<div class="f-foot">
+<p>Cada pedido que no se confirma bien es flete perdido, producto dañado y tiempo tirado. <b>No es un problema de ventas. Es un problema de operación.</b></p>
+<span class="tiny mono">Barras ilustrativas</span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 4 · ¿TE PASA ESTO? -->
+<section class="sec" data-par style="padding-top: 40px">
+<div class="atmo"><div class="blob par2" style="width: 600px; height: 600px; right: -200px; top: 0; background: radial-gradient(circle, rgba(255,122,26,.12), transparent 65%)"></div></div>
+<div class="wrap">
+<div class="rv">
+<span class="eyebrow">¿Te pasa esto?</span>
+<h2 class="h2">Tus anuncios venden. <span class="light">Tu operación es la que te hace perder plata.</span></h2>
+</div>
+<div class="g2 stg" style="margin-top: 52px">
+<div class="card glass rv-s"><div class="card-top"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/><path d="M15 14l4 4M19 14l-4 4"/></svg></div><span class="idx">01</span></div><h3>Pedidos que nunca se entregan</h3><p>Vendes, despachas y el cliente no contesta o rechaza en la puerta.</p></div>
+<div class="card glass rv-s"><div class="card-top"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg></div><span class="idx">02</span></div><h3>Devoluciones que se comen tu margen</h3><p>Pagas flete de ida y de vuelta. Lo que ganaste en el anuncio lo pierdes en logística.</p></div>
+<div class="card glass rv-s"><div class="card-top"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/><path d="M12 8v4M12 15.5v.01"/></svg></div><span class="idx">03</span></div><h3>Clientes sin respuesta</h3><p>Escriben fuera de horario o un domingo y nadie contesta. La venta se enfría.</p></div>
+<div class="card glass rv-s"><div class="card-top"><div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/><path d="M18 3l2 2M6 3L4 5"/></svg></div><span class="idx">04</span></div><h3>Tú haciendo todo</h3><p>Anuncios, confirmación, guías, novedades. No tienes tiempo para escalar.</p></div>
+</div>
+<p class="quote-band rv"><span class="shiny">Delegar es crecer.</span> <span class="light">Mientras la operación dependa de ti, tu negocio tiene techo.</span></p>
+</div>
+</section>
+
+<!-- 5 · DOS FORMAS DE TRABAJAR -->
+<section class="sec" id="safeorder">
+<div class="wrap">
+<div class="rv" style="text-align: center">
+<span class="eyebrow">Dos formas de trabajar conmigo</span>
+<h2 class="h2">Que lo hagamos por ti, <span class="light">o que aprendas a hacerlo tú.</span></h2>
+</div>
+<div class="g2 stg" style="margin-top: 56px">
+<div class="offer glass offer-hot rv-s">
+<span class="chip">LO HACEMOS POR TI</span>
+<h3>SafeOrder</h3>
+<p class="for">Para tiendas que ya venden y quieren dejar de perder pedidos.</p>
+<ul class="list">
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Confirmación de pedidos con criterio real</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Control operativo y seguimiento de novedades</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Logística cuidada de principio a fin</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Atención al cliente 24/7, incluso domingos y festivos</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="ph">[MODALIDAD Y PRECIO: POR PEDIDO / MENSUAL]</span></li>
+</ul>
+<a class="btn btn-acc btn-lg shine" href="https://wa.me/57XXXXXXXXXX">QUIERO SAFEORDER <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+<div class="offer glass rv-s" id="asesoria">
+<span class="chip">TE ENSEÑO A HACERLO</span>
+<h3>Asesoría operativa</h3>
+<p class="for">Para quienes quieren montar su propia operación y su equipo.</p>
+<ul class="list">
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Diagnóstico de tu operación actual</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Proceso de confirmación paso a paso</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Indicadores para saber dónde pierdes dinero</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Cómo delegar y armar tu equipo</li>
+<li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span class="ph">[FORMATO, SESIONES Y PRECIO]</span></li>
+</ul>
+<a class="btn btn-ghost btn-lg shine" href="https://wa.me/57XXXXXXXXXX">QUIERO LA ASESORÍA <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 6 · CÓMO FUNCIONA -->
+<section class="sec" id="como">
+<div class="wrap">
+<div class="rv">
+<span class="eyebrow">Cómo funciona SafeOrder</span>
+<h2 class="h2">Del pedido al dinero, <span class="light">sin que tengas que estar encima.</span></h2>
+</div>
+<div class="steps stg rv">
+<svg class="steps-line" viewBox="0 0 1000 2" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M0 1H1000" stroke="rgba(255,122,26,.5)" stroke-width="2" fill="none" vector-effect="non-scaling-stroke"/></svg>
+<div class="step rv"><div class="step-n">01</div><h3>Entra el pedido</h3><p>Nos conectamos a tu tienda o recibimos tus pedidos <span class="ph">[Shopify / Dropi / planilla]</span>.</p></div>
+<div class="step rv"><div class="step-n">02</div><h3>Lo confirmamos con criterio</h3><p>Llamamos o escribimos al cliente, validamos datos, dirección e intención real de compra.</p></div>
+<div class="step rv"><div class="step-n">03</div><h3>Filtramos el riesgo</h3><p>Los pedidos dudosos no salen. Te ahorras el flete de ida y de vuelta.</p></div>
+<div class="step rv"><div class="step-n">04</div><h3>Seguimos la entrega</h3><p>Gestionamos novedades con la transportadora hasta que el pedido llega.</p></div>
+<div class="step rv"><div class="step-n">05</div><h3>Te reportamos</h3><p>Ves cuántos pedidos se confirmaron, cuántos se entregaron y cuánto dinero protegiste.</p></div>
+</div>
+
+<div class="board glass rv-s">
+<div class="board-head"><b>Tu operación, ordenada</b><span class="tiny mono">Ejemplo de tablero · pedidos ilustrativos</span></div>
+<div class="g4 stg">
+<div class="col"><div class="col-h"><i style="background: rgba(255,255,255,.6)"></i>NUEVO</div><div class="col-d">Entró desde tu tienda</div><div class="ord"><b><span>#1048</span><span>09:12</span></b><span>Contra entrega · Medellín</span></div><div class="ord"><b><span>#1049</span><span>09:15</span></b><span>Contra entrega · Cali</span></div></div>
+<div class="col"><div class="col-h"><i style="background: #FF7A1A"></i>CONFIRMADO</div><div class="col-d">Cliente validado</div><div class="ord ord-live"><b><span>#1046</span><span>08:57</span></b><span>Dirección verificada</span></div><div class="ord"><b><span>#1045</span><span>08:41</span></b><span>Intención confirmada</span></div></div>
+<div class="col"><div class="col-h"><i style="background: #FFB27A"></i>EN RUTA</div><div class="col-d">Con la transportadora</div><div class="ord"><b><span>#1039</span><span>Ayer</span></b><span>Novedad gestionada</span></div><div class="ord"><b><span>#1037</span><span>Ayer</span></b><span>En reparto</span></div></div>
+<div class="col"><div class="col-h"><i style="background: #5FD39A"></i>ENTREGADO</div><div class="col-d">Dinero en camino</div><div class="ord"><b><span>#1031</span><span>Lun</span></b><span>Recaudo en proceso</span></div><div class="ord"><b><span>#1029</span><span>Lun</span></b><span>Recaudado</span></div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 7 · RESULTADOS -->
+<section class="sec">
+<div class="wrap">
+<div class="rv">
+<span class="eyebrow">Resultados</span>
+<h2 class="h2">Operación cuidada, <span class="light">dinero protegido.</span></h2>
+</div>
+<div class="stats stg">
+<div class="stat rv"><div class="stat-n mono">[X]</div><div class="stat-l">pedidos confirmados</div><svg width="140" height="36" viewBox="0 0 140 36" aria-hidden="true"><path class="draw" d="M2 32 L24 26 L46 28 L68 18 L90 20 L112 9 L138 4" stroke="#FF7A1A" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="stat rv"><div class="stat-n mono">[X%]</div><div class="stat-l">de tasa de entrega</div><svg width="140" height="36" viewBox="0 0 140 36" aria-hidden="true"><path class="draw" d="M2 30 L24 29 L46 22 L68 24 L90 14 L112 11 L138 6" stroke="#FFB27A" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="stat rv"><div class="stat-n mono">[−X%]</div><div class="stat-l">de devoluciones</div><svg width="140" height="36" viewBox="0 0 140 36" aria-hidden="true"><path class="draw" d="M2 4 L24 8 L46 7 L68 16 L90 18 L112 26 L138 31" stroke="#5FD39A" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+<div class="stat rv"><div class="stat-n mono">24/7</div><div class="stat-l">atención, domingos y festivos</div><svg width="140" height="36" viewBox="0 0 140 36" aria-hidden="true"><path class="draw" d="M2 18 H138" stroke="rgba(255,255,255,.4)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-dasharray="4 6"/></svg></div>
+</div>
+<div class="g3 stg" style="margin-top: 40px">
+<div class="slot rv-s" style="min-height: 260px">[TESTIMONIO 1 · captura de WhatsApp o vídeo corto de una tienda]</div>
+<div class="slot rv-s" style="min-height: 260px">[TESTIMONIO 2]</div>
+<div class="slot rv-s" style="min-height: 260px">[TESTIMONIO 3]</div>
+</div>
+<div class="slot rv-s" style="min-height: 200px; margin-top: 20px">[ANTES Y DESPUÉS DE UNA TIENDA · % de entrega y devoluciones]</div>
+</div>
+</section>
+
+<!-- 8 · QUIÉN ES MATEO -->
+<section class="sec" data-par style="overflow: hidden">
+<div class="wm-txt wm" aria-hidden="true">MATEO PÉREZ</div>
+<div class="marq" style="position: relative; z-index: 3">
+<div class="marq-track">
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Confirmación con criterio real</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Control operativo experto</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Logística cuidada de principio a fin</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Delegar es crecer</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Atención 24/7</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ecommerce contra entrega</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Confirmación con criterio real</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Control operativo experto</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Logística cuidada de principio a fin</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Delegar es crecer</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Atención 24/7</span>
+<span class="badge glass"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ecommerce contra entrega</span>
+</div>
+</div>
+<div class="wrap">
+<div class="about">
+<div class="photo rv-l">
+<img class="par2" src="img/mateo.png" alt="Mateo Pérez" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%">
+<div class="photo-mask"></div>
+</div>
+<div class="rv">
+<span class="eyebrow">Quién está detrás</span>
+<h2 class="name" style="margin-top: 18px"><span class="light" style="font-size: .5em; display: block; letter-spacing: -.03em">Soy</span><span class="shiny">Mateo Pérez</span></h2>
+<span class="role">Coach en control operativo · Founder de SafeOrder</span>
+<p class="about-q">“Trabajo en la parte que nadie muestra en redes: <span class="hl">ahí es donde se gana o se pierde el dinero de verdad.</span>”</p>
+<p class="story">Soy coach en control operativo para ecommerce y fundador de SafeOrder. Me ocupo de la confirmación, la logística y la atención al cliente de tiendas contra entrega. <span class="ph">[Completar: desde cuándo, cuántas tiendas, su historia.]</span></p>
+<div style="margin-top: 32px"><a class="btn btn-acc shine" href="https://wa.me/57XXXXXXXXXX">HABLEMOS POR WHATSAPP <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 9 · PARA QUIÉN ES -->
+<section class="sec">
+<div class="wrap">
+<div class="rv" style="text-align: center">
+<span class="eyebrow">Para quién es</span>
+<h2 class="h2">Esto no es para todos. <span class="light">Y está bien.</span></h2>
+</div>
+<div class="g2 stg" style="margin-top: 52px">
+<div class="fit glass offer-hot rv-s">
+<h3>Es para ti si…</h3>
+<ul>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF7A1A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Ya vendes con contra entrega o dropshipping.</li>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF7A1A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Te duelen las devoluciones y los pedidos que no se entregan.</li>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FF7A1A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Quieres delegar la operación para escalar.</li>
+</ul>
+</div>
+<div class="fit fit-no glass rv-s">
+<h3>No es para ti si…</h3>
+<ul>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.46)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Todavía no tienes ventas.</li>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.46)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>Buscas que alguien te consiga clientes.</li>
+<li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.46)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>No quieres medir tus números.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 10 · APRENDE GRATIS -->
+<section class="sec">
+<div class="wrap">
+<div class="rv">
+<span class="eyebrow">Aprende gratis</span>
+<h2 class="h2">Antes de escribirme, <span class="light">mira cómo pienso la operación.</span></h2>
+</div>
+<div class="g3 reels stg" style="margin-top: 48px">
+<div class="reel glass rv-s"><div class="reel-v"><span class="tiny mono">[REEL DE INSTAGRAM]</span><span class="mini-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></span><span class="tiny mono">01</span></div><h3>Por qué el <span class="ph">[30%]</span> de tus pedidos contra entrega nunca se entrega</h3></div>
+<div class="reel glass rv-s"><div class="reel-v"><span class="tiny mono">[REEL DE INSTAGRAM]</span><span class="mini-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></span><span class="tiny mono">02</span></div><h3>Así confirmamos un pedido en 60 segundos</h3></div>
+<div class="reel glass rv-s"><div class="reel-v"><span class="tiny mono">[REEL DE INSTAGRAM]</span><span class="mini-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFFFFF" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg></span><span class="tiny mono">03</span></div><h3>La devolución que te cuesta dos fletes</h3></div>
+</div>
+<span class="swipe">Desliza para ver más →</span>
+</div>
+</section>
+
+<!-- 11 · FAQ -->
+<section class="sec" id="faq">
+<div class="wrap faq-wrap">
+<div class="rv">
+<span class="eyebrow">Preguntas frecuentes</span>
+<h2 class="h2">Lo que más <span class="light">me preguntan.</span></h2>
+<p class="lead">¿Tienes otra duda? Escríbeme y te respondo por WhatsApp.</p>
+</div>
+<div class="rv">
+<div class="faq open"><button type="button" aria-expanded="true"><span>¿Con qué plataformas trabajan?</span><span class="faq-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button><p class="faq-a">[Shopify, Dropi, Effi, planilla… confirmar].</p></div>
+<div class="faq"><button type="button" aria-expanded="false"><span>¿Cómo se cobra SafeOrder?</span><span class="faq-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button><p class="faq-a" hidden>[Por pedido confirmado / mensual]. Te lo explico por WhatsApp según tu volumen.</p></div>
+<div class="faq"><button type="button" aria-expanded="false"><span>¿Trabajan fines de semana?</span><span class="faq-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button><p class="faq-a" hidden>Sí. Atención 24/7, incluso domingos y festivos.</p></div>
+<div class="faq"><button type="button" aria-expanded="false"><span>¿Qué diferencia hay entre SafeOrder y la asesoría?</span><span class="faq-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button><p class="faq-a" hidden>SafeOrder lo hacemos por ti. En la asesoría te enseño a montar tu propia operación.</p></div>
+<div class="faq"><button type="button" aria-expanded="false"><span>¿Desde cuántos pedidos vale la pena?</span><span class="faq-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></button><p class="faq-a" hidden>[Volumen mínimo recomendado].</p></div>
+
+</div>
+</div>
+</section>
+
+<!-- 12 · CTA FINAL -->
+<section class="sec" style="padding-top: 40px">
+<div class="wrap">
+<div class="final glass rv-s">
+<div class="atmo"><div class="blob" style="width: 640px; height: 640px; left: 50%; top: -340px; margin-left: -320px; background: radial-gradient(circle, rgba(255,122,26,.35), transparent 65%)"></div></div>
+<div style="position: relative; z-index: 2">
+<span class="pill"><b>24/7</b><span>Atención incluso domingos y festivos</span></span>
+<div class="clockbig mono"><span data-clock>--:--:--</span><small>HORA EN COLOMBIA · ESTAMOS CONFIRMANDO</small></div>
+<h2 class="h2">Porque vender <span class="shiny">sin control</span> sale caro.</h2>
+<p class="lead">Escríbeme por WhatsApp y vemos cuánto dinero se te está escapando en la operación.</p>
+<div class="final-cta">
+<a class="btn btn-acc btn-lg shine" href="https://wa.me/57XXXXXXXXXX"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>HABLEMOS POR WHATSAPP</a>
+<a class="btn btn-ghost btn-lg shine" href="#safeorder">VER SAFEORDER</a>
+</div>
+<p class="note" style="margin-top: 18px">Respuesta rápida · 24/7 · Sin compromiso</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- 13 · FOOTER -->
+<footer class="wrap">
+<div class="foot">
+<div class="foot-top">
+<a class="logo" href="#top" aria-label="Volver arriba">
+<span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
+<span><b>Mateo Pérez · SafeOrder</b><span>Logística profesional para ecommerce y dropshipping</span></span>
+</a>
+<div class="foot-links">
+<a href="https://instagram.com/mateo.ecomm">Instagram</a>
+<a href="#top">[Política de privacidad]</a>
+<a href="#top">[Términos y condiciones]</a>
+</div>
+</div>
+<small>© 2026 FutureAhead. Todos los derechos reservados. Los resultados de cada tienda dependen de su producto, volumen y operación; no garantizamos cifras específicas. Este sitio no forma parte de Meta Platforms, Inc. ni está respaldado por Meta, Facebook o Instagram.</small>
+</div>
+</footer>
+
+</div>
+<script>
+(function(){
+  var root=document.querySelector('.pg'); if(!root) return;
+  // Reloj hora Colombia
+  var clocks=root.querySelectorAll('[data-clock]');
+  function tick(){var t;try{t=new Date().toLocaleTimeString('es-CO',{timeZone:'America/Bogota',hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'})}catch(e){t='--:--:--'}clocks.forEach(function(c){c.textContent=t})}
+  tick(); setInterval(tick,1000);
+  // FAQ
+  root.querySelectorAll('.faq button').forEach(function(b){b.addEventListener('click',function(){
+    var item=b.parentNode, open=item.classList.contains('open');
+    root.querySelectorAll('.faq').forEach(function(f){f.classList.remove('open');f.querySelector('button').setAttribute('aria-expanded','false');f.querySelector('.faq-a').hidden=true});
+    if(!open){item.classList.add('open');b.setAttribute('aria-expanded','true');item.querySelector('.faq-a').hidden=false}
+  })});
+  // Revelado al hacer scroll
+  if('IntersectionObserver' in window){
+    root.classList.add('js');
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -10% 0px'});
+    root.querySelectorAll('.rv,.rv-l,.rv-s').forEach(function(el){io.observe(el)});
+  }
+  // Parallax
+  var pars=[].slice.call(root.querySelectorAll('[data-par]')), raf=0;
+  function update(){raf=0;var t=window.scrollY||0;root.style.setProperty('--sy',String(Math.min(t,1400)));var vh=window.innerHeight||800;
+    pars.forEach(function(el){var r=el.getBoundingClientRect();var p=((r.top+r.height/2)-vh/2)/vh;el.style.setProperty('--p',Math.max(-1.2,Math.min(1.2,p)).toFixed(4))})}
+  function on(){if(!raf)raf=requestAnimationFrame(update)}
+  window.addEventListener('scroll',on,{passive:true}); window.addEventListener('resize',on); update();
+})();
+</script>
+</body>
+</html>
